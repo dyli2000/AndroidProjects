@@ -9,7 +9,6 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 
 public class ImageButton {
-  
     /**°´Å¥Í¼Æ¬**/
     private Bitmap mBitButton = null;
     
