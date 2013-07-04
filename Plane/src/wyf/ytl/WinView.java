@@ -1,3 +1,6 @@
+//
+//  THE FILE HAS CHANGED
+//
 package wyf.ytl;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
