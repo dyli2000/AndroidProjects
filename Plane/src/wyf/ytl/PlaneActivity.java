@@ -7,7 +7,9 @@ import android.os.Message;//引入相关类
 import android.view.KeyEvent;//引入相关类
 import android.view.Window;//引入相关类
 import android.view.WindowManager;//引入相关类
-public class PlaneActivity extends Activity{
+
+public class PlaneActivity extends Activity
+{
 	int action = 0;//键盘的状态,二进制表示 从左往右表示上下左右
 	GameView gameView;//GameView的引用
 	WelcomeView welcomeView;//WelcomeView的引用
@@ -16,8 +18,12 @@ public class PlaneActivity extends Activity{
 	WinView winView;//欢迎界面的引用
 	ProcessView processView;//进度条界面的引用
 	boolean isSound = true;//是否播放声音
-	Handler myHandler = new Handler(){//用来更新UI线程中的控件
-        public void handleMessage(Message msg) {
+	
+	/*  用来更新UI线程中的控件 */
+	Handler myHandler = new Handler()
+	{
+        public void handleMessage(Message msg) 
+        {
         	if(msg.what == 1){//游戏失败，玩家飞机坠毁
         		if(gameView != null){
         			gameView.keyThread.setFlag(false);//停止键盘监听

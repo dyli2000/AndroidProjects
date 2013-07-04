@@ -56,7 +56,7 @@ public class WelcomeView extends SurfaceView implements SurfaceHolder.Callback
         if(activity.processView != null){
         	activity.processView.process += 10;
         }
-        initSounds();//初始化声音 
+        //initSounds();//初始化声音 
         initBitmap();//初始化图片资源
         playSound(1);
 	}
