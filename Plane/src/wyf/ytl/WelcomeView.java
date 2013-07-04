@@ -11,6 +11,7 @@ import android.media.SoundPool;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+
 public class WelcomeView extends SurfaceView implements SurfaceHolder.Callback {
 	PlaneActivity activity;//activity的引用
 	private TutorialThread thread;//刷帧的线程
@@ -36,18 +37,22 @@ public class WelcomeView extends SurfaceView implements SurfaceHolder.Callback {
 	
 	Paint paint;//用于改变透明度
 	Paint paint2;//正常绘制
+	
 	public WelcomeView(PlaneActivity activity) {//构造器 
 		super(activity);
 		this.activity = activity;//得到activity的引用
 
-        if(activity.processView != null){//走加载界面进度
+		/* 走加载界面进度 */
+        if(activity.processView != null)
+        {
         	activity.processView.process += 10;
         }
         getHolder().addCallback(this);
         this.thread = new TutorialThread(getHolder(), this);
         this.welcomeThread = new WelcomeViewThread(this);
         
-        if(activity.processView != null){//走加载界面进度
+      /* 走加载界面进度 */
+        if(activity.processView != null){
         	activity.processView.process += 10;
         }
         initSounds();//初始化声音 
@@ -161,14 +166,17 @@ public class WelcomeView extends SurfaceView implements SurfaceHolder.Callback {
 			canvas.drawRect(0, 270, 480, 320, paint2);
 		}
 	}
+	
 	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
 	}
+	
 	public void surfaceCreated(SurfaceHolder holder) {//创建时被调用
         this.thread.setFlag(true);//设置循环标记位
         this.thread.start();//启动绘制线程
         this.welcomeThread.setFlag(true);//设置循环标记位
         this.welcomeThread.start(); //启动动画线程
 	}
+	
 	public void surfaceDestroyed(SurfaceHolder holder) {//摧毁时被调用
         boolean retry = true;//循环标记
         thread.setFlag(false);
@@ -180,6 +188,7 @@ public class WelcomeView extends SurfaceView implements SurfaceHolder.Callback {
             catch (InterruptedException e) {}//不断地循环，直到刷帧线程结束
         }
 	}
+	
 	public boolean onTouchEvent(MotionEvent event) {//屏幕监听
 		if(event.getAction() == MotionEvent.ACTION_DOWN){//屏幕被按下
 			if(this.status != 4){//当不是菜单状态时返回
@@ -206,18 +215,22 @@ public class WelcomeView extends SurfaceView implements SurfaceHolder.Callback {
 		}
 		return super.onTouchEvent(event);//调用基类的方法
 	}
+	
 	class TutorialThread extends Thread{//刷帧线程
 		private int span = 100;//睡眠的毫秒数 
 		private SurfaceHolder surfaceHolder;
 		private WelcomeView welcomeView;//欢迎界面的引用
 		private boolean flag = false;
+		
         public TutorialThread(SurfaceHolder surfaceHolder, WelcomeView welcomeView) {//构造器
             this.surfaceHolder = surfaceHolder;//SurfaceHolder的引用
             this.welcomeView = welcomeView;//欢迎界面的引用
         }
+        
         public void setFlag(boolean flag) {//设置标准位
         	this.flag = flag;
         }
+        
 		public void run() {//重写的run方法
 			Canvas c;
             while (this.flag) {//循环

@@ -7,13 +7,16 @@ import android.os.Message;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-public class WinView extends SurfaceView implements SurfaceHolder.Callback {
+
+public class WinView extends SurfaceView implements SurfaceHolder.Callback 
+{
 	PlaneActivity activity;
 	private TutorialThread thread;//刷帧的线程
 	Bitmap winviewbackground;//背景
 	Bitmap goon;//重新游戏按钮
 	Bitmap exit2;//退出按钮
 	Paint paint;//画笔
+
 	public WinView(PlaneActivity activity) {//构造器 
 		super(activity);
 		this.activity = activity;
@@ -21,12 +24,14 @@ public class WinView extends SurfaceView implements SurfaceHolder.Callback {
         this.thread = new TutorialThread(getHolder(), this);
         initBitmap();//初始化图片资源 
 	}
+	
 	public void initBitmap(){//初始化图片资源的方法 
 		paint = new Paint();
 		winviewbackground = BitmapFactory.decodeResource(getResources(), R.drawable.bg);
 		goon = BitmapFactory.decodeResource(getResources(), R.drawable.goon);
 		exit2 = BitmapFactory.decodeResource(getResources(), R.drawable.exit2);
 	}
+	
 	public void onDraw(Canvas canvas){//自己写的绘制方法
 		//画的内容是z轴的，后画的会覆盖前面画的
 		canvas.drawBitmap(winviewbackground, 0, 30, paint);
@@ -36,13 +41,19 @@ public class WinView extends SurfaceView implements SurfaceHolder.Callback {
 		canvas.drawRect(0, 0, 480, 48, paint);//绘制上下的黑框
 		canvas.drawRect(0, 270, 480, 320, paint);
 	}
-	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+	
+	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) 
+	{
 	}
-	public void surfaceCreated(SurfaceHolder holder) {
+	
+	public void surfaceCreated(SurfaceHolder holder) 
+	{
         this.thread.setFlag(true);
         this.thread.start();
 	}
-	public void surfaceDestroyed(SurfaceHolder holder) {
+	
+	public void surfaceDestroyed(SurfaceHolder holder) 
+	{
         boolean retry = true;
         thread.setFlag(false);
         while (retry) {
@@ -54,6 +65,7 @@ public class WinView extends SurfaceView implements SurfaceHolder.Callback {
             }
         }
 	}
+	
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {//屏幕监听
 		if(event.getAction() == MotionEvent.ACTION_DOWN){
@@ -69,6 +81,7 @@ public class WinView extends SurfaceView implements SurfaceHolder.Callback {
 		}
 		return super.onTouchEvent(event);
 	}
+	
 	class TutorialThread extends Thread{//刷帧线程
 		private int span = 500;//睡眠的毫秒数 
 		private SurfaceHolder surfaceHolder;
@@ -78,27 +91,37 @@ public class WinView extends SurfaceView implements SurfaceHolder.Callback {
             this.surfaceHolder = surfaceHolder;
             this.winView = winView;
         }
-        public void setFlag(boolean flag) {
+        
+        public void setFlag(boolean flag) 
+        {
         	this.flag = flag;
         }
+        
 		@Override
-		public void run() {
+		public void run() 
+		{
 			Canvas c;
-            while (this.flag) {
+            while (this.flag) 
+            {
                 c = null;
-                try {
+                try 
+                {
                 	// 锁定整个画布，在内存要求比较高的情况下，建议参数不要为null
                     c = this.surfaceHolder.lockCanvas(null);
-                    synchronized (this.surfaceHolder) {
+                    synchronized (this.surfaceHolder) 
+                    {
                     	winView.onDraw(c);
                     }
-                } finally {
-                    if (c != null) {
+                } finally 
+                {
+                    if (c != null) 
+                    {
                     	//更新屏幕显示内容
                         this.surfaceHolder.unlockCanvasAndPost(c);
                     }
                 }
-                try{
+                try
+                {
                 	Thread.sleep(span);
                 }
                 catch(Exception e){
@@ -106,5 +129,6 @@ public class WinView extends SurfaceView implements SurfaceHolder.Callback {
                 }
             }
 		}
+		
 	}
 }
