@@ -1,3 +1,8 @@
+//
+// Test in pc 179
+// 2013-0704
+//
+
 package wyf.ytl;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
