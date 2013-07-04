@@ -12,8 +12,7 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-public class WelcomeView extends SurfaceView implements SurfaceHolder.Callback
-{
+public class WelcomeView extends SurfaceView implements SurfaceHolder.Callback {
 	PlaneActivity activity;//activity的引用
 	private TutorialThread thread;//刷帧的线程
 	private WelcomeViewThread welcomeThread;//绘制线程
@@ -60,13 +59,11 @@ public class WelcomeView extends SurfaceView implements SurfaceHolder.Callback
         initBitmap();//初始化图片资源
         playSound(1);
 	}
-	
 	public void initSounds(){//初始化声音的方法
 	     soundPool = new SoundPool(4, AudioManager.STREAM_MUSIC, 100);//初始化SoundPool
 	     soundPoolMap = new HashMap<Integer, Integer>();//初始化   HashMap
 	     soundPoolMap.put(1, soundPool.load(getContext(), R.raw.welcome1, 1));
 	} 
-	
 	public void playSound(int sound) {//播放声音的方法
 	    AudioManager mgr = (AudioManager)getContext().getSystemService(Context.AUDIO_SERVICE);   
 	    float streamVolumeCurrent = mgr.getStreamVolume(AudioManager.STREAM_MUSIC);   
@@ -119,7 +116,6 @@ public class WelcomeView extends SurfaceView implements SurfaceHolder.Callback
         	activity.processView.process += 10;
         }
 	}
-	
 	public void onDraw(Canvas canvas){//自己写的绘制方法
 		//画的内容是z轴的，后画的会覆盖前面画的
 		canvas.drawColor(Color.WHITE);//背景色

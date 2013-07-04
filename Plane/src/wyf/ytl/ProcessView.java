@@ -5,7 +5,6 @@ import android.graphics.Canvas;//引入相关类
 import android.graphics.Paint;//引入相关类
 import android.view.SurfaceHolder;//引入相关类
 import android.view.SurfaceView;//引入相关类
-
 public class ProcessView extends SurfaceView implements SurfaceHolder.Callback {
 	PlaneActivity activity;//activity的引用
 	private TutorialThread thread;//刷帧的线程
@@ -18,7 +17,6 @@ public class ProcessView extends SurfaceView implements SurfaceHolder.Callback {
 	int startY = 150;
 	int type;//当前加载的是哪个View
 	int k = 0;//加载中的点点
-	
 	public ProcessView(PlaneActivity activity, int type) {//构造器 
 		super(activity);
 		this.activity = activity;//得到activity的引用
@@ -27,7 +25,6 @@ public class ProcessView extends SurfaceView implements SurfaceHolder.Callback {
         this.type = type;//当前加载的是那么界面
         initBitmap();//初始化图片资源
 	}
-	
 	public void initBitmap(){//初始化图片资源的方法
 		paint = new Paint();//创建画笔
 		paint.setTextSize(12);//设置字体大小
@@ -35,7 +32,6 @@ public class ProcessView extends SurfaceView implements SurfaceHolder.Callback {
 		processBackground = BitmapFactory.decodeResource(getResources(), R.drawable.processbackground);
 		processMan = BitmapFactory.decodeResource(getResources(), R.drawable.processman);
 	}
-	
 	public void onDraw(Canvas canvas){//自己写的绘制方法
 		//画的内容是z轴的，后画的会覆盖前面画的
 		canvas.drawBitmap(processBackground, -10, 10, paint);//绘制背景图片
@@ -62,15 +58,12 @@ public class ProcessView extends SurfaceView implements SurfaceHolder.Callback {
 		canvas.drawRect(0, 270, 480, 320, paint);
 		k = (k+1)%4;
 	}
-	
 	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
 	}
-	
 	public void surfaceCreated(SurfaceHolder holder) {//创建是被调用
         this.thread.setFlag(true);//设置线程标志位
         this.thread.start();//启动线程
 	}
-	
 	public void surfaceDestroyed(SurfaceHolder holder) {//摧毁时被调用
         boolean retry = true;//循环标志位
         thread.setFlag(false);//设置循环标志位
@@ -82,25 +75,19 @@ public class ProcessView extends SurfaceView implements SurfaceHolder.Callback {
             catch (InterruptedException e) {}//不断地循环，直到刷帧线程结束
         }
 	}
-	
 	class TutorialThread extends Thread{//刷帧线程
 		private int span = 400;//睡眠的毫秒数 
 		private SurfaceHolder surfaceHolder;
 		private ProcessView processView;//processView引用
 		private boolean flag = false;//循环标志位
-		
         public TutorialThread(SurfaceHolder surfaceHolder, ProcessView processView) {//构造器
             this.surfaceHolder = surfaceHolder;
             this.processView = processView;//得到加载界面
         }
-        
         public void setFlag(boolean flag) {//设置标志位
         	this.flag = flag;
         }
-        
-      /* 重写的run方法 */
-		public void run() 
-		{
+		public void run() {//重写的run方法
 			Canvas c;//画布
             while (this.flag) {//循环
                 c = null;
