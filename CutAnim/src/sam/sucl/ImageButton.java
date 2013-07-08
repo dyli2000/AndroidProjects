@@ -8,7 +8,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
-public class ImageButton {
+public class ImageButton 
+{
     /**按钮图片**/
     private Bitmap mBitButton = null;
     
@@ -19,12 +20,13 @@ public class ImageButton {
     private int mWidth =0;
     private int mHeight =0;
   
-    public ImageButton(Context context, int frameBitmapID, int x, int y) {
-	mBitButton = ReadBitMap(context,frameBitmapID);
-	mPosX = x;
-	mPosY = y;
-	mWidth = mBitButton.getWidth();
-	mHeight = mBitButton.getHeight();
+    public ImageButton(Context context, int frameBitmapID, int x, int y) 
+    {
+		mBitButton = ReadBitMap(context,frameBitmapID);
+		mPosX = x;
+		mPosY = y;
+		mWidth = mBitButton.getWidth();
+		mHeight = mBitButton.getHeight();
     }
 
     /**
@@ -32,8 +34,9 @@ public class ImageButton {
      * @param canvas
      * @param paint
      */
-    public void DrawImageButton(Canvas canvas, Paint paint) {
-	canvas.drawBitmap(mBitButton, mPosX, mPosY, paint);
+    public void DrawImageButton(Canvas canvas, Paint paint) 
+    {
+    	canvas.drawBitmap(mBitButton, mPosX, mPosY, paint);
     }
     
     /**
@@ -41,13 +44,15 @@ public class ImageButton {
      * @param x
      * @param y
      */
-    public boolean IsClick(int x, int y) {
-	boolean isClick = false;
-	if (x >= mPosX && x <= mPosX + mWidth && y >= mPosY
-		&& y <= mPosY + mHeight) {
-	    isClick = true;
-	}
-	return isClick;
+    public boolean IsClick(int x, int y) 
+    {
+		boolean isClick = false;
+		if (x >= mPosX && x <= mPosX + mWidth && y >= mPosY
+			&& y <= mPosY + mHeight) 
+		{
+		    isClick = true;
+		}
+		return isClick;
     }
     
     /**
@@ -56,13 +61,15 @@ public class ImageButton {
      * @param resId
      * @return
      */
-    public Bitmap ReadBitMap(Context context, int resId) {
-	BitmapFactory.Options opt = new BitmapFactory.Options();
-	opt.inPreferredConfig = Bitmap.Config.RGB_565;
-	opt.inPurgeable = true;
-	opt.inInputShareable = true;
-	// 获取资源图片
-	InputStream is = context.getResources().openRawResource(resId);
-	return BitmapFactory.decodeStream(is, null, opt);
+    public Bitmap ReadBitMap(Context context, int resId) 
+    {
+		BitmapFactory.Options opt = new BitmapFactory.Options();
+		opt.inPreferredConfig = Bitmap.Config.RGB_565;
+		opt.inPurgeable = true;
+		opt.inInputShareable = true;
+		
+		// 获取资源图片
+		InputStream is = context.getResources().openRawResource(resId);
+		return BitmapFactory.decodeStream(is, null, opt);
     }
 }
