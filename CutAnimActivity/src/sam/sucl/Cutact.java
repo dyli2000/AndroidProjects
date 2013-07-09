@@ -139,7 +139,7 @@ public class Cutact extends Activity
 				break;
 				
 			case GO_CUT:
-				mCanvas.drawColor(Color.RED);
+				mCanvas.drawColor(Color.GREEN);
 				move+=2;
 				moveCount++;
 				mCanvas.drawBitmap(tu1, tuPosX,tuPosY-move, paint);
