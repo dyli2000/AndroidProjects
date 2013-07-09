@@ -1,5 +1,4 @@
 package sam.sucl;
-// ADD 2013-07-08-16-55
 import java.io.InputStream;
 
 import android.content.Context;
