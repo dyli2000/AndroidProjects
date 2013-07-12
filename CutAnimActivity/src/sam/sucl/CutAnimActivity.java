@@ -14,7 +14,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
-import net.sourceforge.jtds.jdbc.Driver;
+//import net.sourceforge.jtds.jdbc.Driver;
 
 /* 主要负责界面启动外框的初始工作 */
 public class CutAnimActivity extends Activity
@@ -29,19 +29,19 @@ public class CutAnimActivity extends Activity
         setContentView(R.layout.main);
         
         context=this;
-		Connection con = null;  
-		try {
-			Class.forName( "org.gjt.mm.mysql.Driver" );
-		} catch (ClassNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}// 加载驱动程序  
-		try {
-			con = DriverManager.getConnection( "jdbc:mysql://DbComputerNameOrIPAddr:3306/CutAnim", UserName, Password );
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}  
+//		Connection con = null;  
+//		try {
+//			Class.forName( "org.gjt.mm.mysql.Driver" );
+//		} catch (ClassNotFoundException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}// 加载驱动程序  
+//		try {
+//			con = DriverManager.getConnection( "jdbc:mysql://DbComputerNameOrIPAddr:3306/CutAnim", UserName, Password );
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}  
 
         
         
