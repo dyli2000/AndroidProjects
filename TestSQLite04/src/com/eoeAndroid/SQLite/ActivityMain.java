@@ -6,11 +6,11 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.*;
 
 public class ActivityMain extends Activity
@@ -85,6 +85,7 @@ public class ActivityMain extends Activity
 		setContentView(R.layout.main);
 		prepareListener();
 		initLayout();
+		this.mShowDataTView.clearComposingText();
 		mOpenHelper = new DatabaseHelper(this);
 	}
 
@@ -187,6 +188,7 @@ public class ActivityMain extends Activity
 		try 
 		{
 			db.execSQL(sql);
+			this.mShowDataTView.clearComposingText();
 			setTitle("数据表成功删除：" + sql);
 		} 
 		catch (SQLException e) 
@@ -212,7 +214,8 @@ public class ActivityMain extends Activity
 			db.execSQL(sql1);
 			db.execSQL(sql2);
 			setTitle("插入两条数据成功");
-		} catch (SQLException e) 
+		} 
+		catch (SQLException e) 
 		{
 			setTitle("插入两条数据失败");
 		}
@@ -226,8 +229,8 @@ public class ActivityMain extends Activity
 		try 
 		{
 			SQLiteDatabase db = mOpenHelper.getWritableDatabase();
-			db.delete(TABLE_NAME, " title = 'giggle'", null);
-			setTitle("删除title为giggle的记录");
+			db.delete(TABLE_NAME, " Sid = 1", null);
+			setTitle("删除Sid为1的记录");
 		} 
 		catch (SQLException e) {}
 	}
@@ -237,38 +240,35 @@ public class ActivityMain extends Activity
 	 */
 	private void showItems() 
 	{
-//		/* 查询表的数据  */
-//		Cursor cursor = db.query("StarInfo", null, null, null, null, null, "id asc");  
-//		/*  获取索引 */
-//		int nameIndex = cursor.getColumnIndex("name");
-//		int ballAgeIndex = cursor.getColumnIndex("ballAge");
-//		
-//		for(cursor.moveToFirst(); !(cursor.isAfterLast());cursor.moveToNext())
-//		{
-//			result = result + cursor.getString(nameIndex) + "\t";
-//			result = result + cursor.getInt(ballAgeIndex) + "\n";
-// 		}
-		// SID + ", " + BODY+ "," + ANSWER + "," + IS_ANSWER_CORRECTLY
-		
-		SQLiteDatabase db = mOpenHelper.getReadableDatabase();
-		//String col[] = { SID, BODY };
-		String result = "";
-		Cursor cur = db.query(TABLE_NAME, null, null, null, null, null, null);
-		int  sidIndex = cur.getColumnIndex("Sid");
-		int bodyIndex = cur.getColumnIndex("Body");
-		int answerIndex = cur.getColumnIndex("Answer");
-		int isOkIndex = cur.getColumnIndex("IsAnswerCorrectly");
-		
-		for(cur.moveToFirst(); !(cur.isAfterLast());cur.moveToNext())
+		try
 		{
-			result = result + cur.getInt(sidIndex) + "\t";
-			result = result + cur.getString(bodyIndex) + "\t";
-			result = result + cur.getString(answerIndex) + "\t";
-			result = result + cur.getInt(isOkIndex) + "\n";
+			SQLiteDatabase db = mOpenHelper.getReadableDatabase();
+			String result = "";
+			Cursor cur = db.query(TABLE_NAME, null, null, null, null, null, null);
+			int  sidIndex = cur.getColumnIndex("Sid");
+			int bodyIndex = cur.getColumnIndex("Body");
+			int answerIndex = cur.getColumnIndex("Answer");
+			int isOkIndex = cur.getColumnIndex("IsAnswerCorrectly");
+			
+			if(cur == null)
+				return;
+			for(cur.moveToFirst(); !(cur.isAfterLast());cur.moveToNext())
+			{
+				result = result + cur.getInt(sidIndex) + "\t";
+				result = result + cur.getString(bodyIndex) + "\t";
+				result = result + cur.getString(answerIndex) + "\t";
+				result = result + cur.getInt(isOkIndex) + "\n";
+			}
+			
+			Integer num = cur.getCount();
+			setTitle(Integer.toString(num) + " 条记录");	
+			this.mShowDataTView.setTextColor(Color.RED);
+			this.mShowDataTView.setTextSize(20.0f);
+			this.mShowDataTView.setText("Sid\t Body\t Answer\t IsAnswerd\n"+result);
 		}
-		
-		Integer num = cur.getCount();
-	
-		setTitle(Integer.toString(num) + " 条记录");			
+		catch(Exception e)
+		{
+			setTitle("数据库已经被删除!");
+		}
 	}	
 }
