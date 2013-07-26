@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent" android:id="@+id/MainLinearLayout">
+
+	<Button android:layout_height="wrap_content"
+		android:layout_width="fill_parent" android:id="@+id/btnCreateDB"
+		android:text="创建数据库"></Button>
+	<Button android:layout_height="wrap_content"
+		android:layout_width="fill_parent" android:text="插入一串实验数据" android:id="@+id/btnInsertRec"></Button>
+	<Button android:layout_height="wrap_content" android:id="@+id/btnClose"
+		android:text="关闭数据库" android:layout_width="fill_parent"></Button>
+
+	
+	
+
+</LinearLayout>
