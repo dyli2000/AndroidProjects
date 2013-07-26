@@ -30,7 +30,6 @@ public class Animation
      *                      @context:       
      *                      @frameBitmapID:       
      *                      @isloop:   
-     *       RET  :       Void.
      *---------------------------------------------------------------------------------------------------
      ****************************************************************************************************/    
     public Animation(Context context, int [] frameBitmapID, boolean isloop) 
@@ -51,7 +50,6 @@ public class Animation
      *                      @context:       
      *                      @frameBitmapID:       
      *                      @isloop:   
-     *       RET  :       Void.
      *---------------------------------------------------------------------------------------------------
      ****************************************************************************************************/        
     public Animation(Context context, Bitmap [] frameBitmap, boolean isloop) 
@@ -80,17 +78,16 @@ public class Animation
      *       ARGC :
      *                      @Canvas:       
      *                      @paint:       
-     *                      @x:   
-     *                      @y:
-     *       RET  :       Void.
+     *                      @pointX:   
+     *                      @pointY:
      *---------------------------------------------------------------------------------------------------
      ****************************************************************************************************/        
-    public void DrawAnimation(Canvas Canvas, Paint paint, int x, int y) 
+    public void DrawAnimation(Canvas Canvas, Paint paint, int pointX, int pointY) 
     {
 		//如果没有播放结束则继续播放
 		if (!mIsend) 
 		{
-		    Canvas.drawBitmap(mframeBitmap[mPlayID], x, y, paint);
+		    Canvas.drawBitmap(mframeBitmap[mPlayID], pointX, pointY, paint);
 		    long time = System.currentTimeMillis();
 		    
 		    if (time - mLastPlayTime > ANIM_TIME) 
@@ -118,7 +115,7 @@ public class Animation
      *       ARGC :
      *                      @context:       
      *                      @resId:       
-     *       RET  :       Void.
+     *          RET:		Bitmap对象
      *---------------------------------------------------------------------------------------------------
      ****************************************************************************************************/      
     public Bitmap ReadBitMap(Context context, int resId) 

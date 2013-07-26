@@ -3,11 +3,12 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 /**
- * 
+*
  * 该类为可以吃到改变玩家飞机子弹的类
  *
  */
-public class ChangeBullet {
+public class ChangeBullet 
+{
 	int x = ConstantUtil.screenWidth;//坐标
 	int y;
 	boolean status;//状态
@@ -17,6 +18,7 @@ public class ChangeBullet {
 	int target;//当前目标点
 	int step;//当前处于当前路径片段中第几步
 	int[][] path; 
+	
 	public ChangeBullet(int start,int target,int step,int[][] path, boolean status,long touchPoint){//构造器
 		this.start=start;
 		this.target=target;
@@ -27,9 +29,11 @@ public class ChangeBullet {
 		this.x=path[0][start];
 		this.y=path[1][start];
 	}
+	
 	public void draw(Canvas canvas){
 		canvas.drawBitmap(bitmap, x, y, new Paint());
 	}
+	
 	public void move(){
 		if(step==path[2][start]){//一段路径走完,到下一段路径开始
 			step=0;

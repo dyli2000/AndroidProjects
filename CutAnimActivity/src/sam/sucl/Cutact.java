@@ -44,7 +44,7 @@ public class Cutact extends Activity
      *       DESC :     事件检测处理函数
      *       ARGC :
       *                      @event:       Motion event.
-     *       RET  :       Void.
+     *       RET  :       false,没有事件触发.
      *---------------------------------------------------------------------------------------------------
      ****************************************************************************************************/	
 	public boolean onTouchEvent(MotionEvent event)
@@ -70,50 +70,40 @@ public class Cutact extends Activity
 	
 	public class CutAV extends SurfaceView implements Callback,Runnable
 	{
-		private int mScreenWidth=0;
-		private int mScreenHeight=0;
+		private int mScreenWidth = 0;
+		private int mScreenHeight = 0;
+		private static final int GO_GO = 0;
+		private static final int GO_CUT = 1;
 		
-		private static final int GO_GO=0;
-		private static final int GO_CUT=1;
-//		private static final int GO_END=2;
-//		private static final int GO_COUNT=3;
+		private int mCutState=GO_GO;
+		private Animation  mAnimation=null;
+		private int mTuPosX= 0;
+		private int mTuPosY= 0;
+		private Bitmap mTu1=null;
+		private Bitmap mTu2=null;
+		private ImageButton mGoButton=null;
 		
-		private int cut_state=GO_GO;
-		private Animation tu=null;
-		private int tuPosX=0;
-		private int tuPosY=0;
-		
-		private Bitmap tu1=null;
-		private Bitmap tu2=null;
-		
-		private ImageButton goButton=null;
-//		private int goPosX=250;
-//		private int goPosY=150;
-		
-		private int move=20;
-		private int moveCount=0;
-		
-//		private Bitmap bg=null;
-		
+		private int mMove=20;
+		private int mMoveCount=0;
 		private Thread mThread=null;
 		private Context mContext=null;
 		private Canvas mCanvas=null;
-		private Paint paint=null;
-		private SurfaceHolder surfaceHolder=null;
-		private boolean isRunning=false;
+		private Paint mPaint=null;
+		private SurfaceHolder mSurfaceHolder=null;
+		private boolean mIsRunning=false;
 		
 		public CutAV(Context context,int screenWidth,int screenHeight)
 		{
 			super(context);
 			mContext=context;
 			mCanvas=new Canvas();
-			paint=new Paint();
+			mPaint=new Paint();
 			
 			mScreenWidth=screenWidth;
 			mScreenHeight=screenHeight;
 			
-			surfaceHolder=getHolder();
-			surfaceHolder.addCallback(this);
+			mSurfaceHolder=getHolder();
+			mSurfaceHolder.addCallback(this);
 			setFocusable(true);
 			
 			/* 主要是初始化一个动态大控件和两个被切开的分半的小控件  */
@@ -124,26 +114,24 @@ public class Cutact extends Activity
 		
 		protected void doDraw()
 		{
-			switch (cut_state) 
+			switch (mCutState) 
 			{
 			case GO_GO:
-				tuPosX -=20;  // 每次步进 10 宽度
+				mTuPosX -=20;  // 每次步进 10 宽度
 				mCanvas.drawColor(Color.BLACK);
 				/*  如果到达顶部，重新置0 */
-				if(tuPosX - 10 <= 0)
-					tuPosX = mScreenWidth;
-				
-				goButton=new ImageButton(mContext, R.drawable.ic_launcher, tuPosX, tuPosY);
-				goButton.DrawImageButton(mCanvas, paint);
-				//tu.DrawAnimation(mCanvas, paint, tuPosX, tuPosY);
+				if(mTuPosX - 10 <= 0)
+					mTuPosX = mScreenWidth;
+				mGoButton=new ImageButton(mContext, R.drawable.ic_launcher, mTuPosX, mTuPosY);
+				mGoButton.DrawImageButton(mCanvas, mPaint);
 				break;
 				
 			case GO_CUT:
 				mCanvas.drawColor(Color.GREEN);
-				move+=2;
-				moveCount++;
-				mCanvas.drawBitmap(tu1, tuPosX,tuPosY-move, paint);
-				mCanvas.drawBitmap(tu2, tuPosX,tuPosY+move, paint);
+				mMove+=2;
+				mMoveCount++;
+				mCanvas.drawBitmap(mTu1, mTuPosX,mTuPosY-mMove, mPaint);
+				mCanvas.drawBitmap(mTu2, mTuPosX,mTuPosY+mMove, mPaint);
 				cutSt();
 				break;
 				
@@ -155,26 +143,26 @@ public class Cutact extends Activity
 
 		private void cutSt() 
 		{
-			if (moveCount>10)
+			if (mMoveCount>10)
 			{
-				cut_state=GO_GO;
-				moveCount=0;
-				move=20;
-				tuPosX=mScreenWidth;
+				mCutState=GO_GO;
+				mMoveCount=0;
+				mMove=20;
+				mTuPosX=mScreenWidth;
 			}
 		}
 
 		private void init() 
 		{
-			tuPosX=mScreenWidth;
-			tuPosY=mScreenHeight/2;
+			mTuPosX=mScreenWidth;
+			mTuPosY=mScreenHeight/2;
 			
 			/* 创建动态进程的图 */
-			tu=new Animation(mContext, new int[]{R.drawable.ic_launcher,R.drawable.ic_launcher1,R.drawable.ic_launcher2,R.drawable.ic_launcher3}, true);
+			mAnimation = new Animation(mContext, new int[]{R.drawable.ic_launcher,R.drawable.ic_launcher1,R.drawable.ic_launcher2,R.drawable.ic_launcher3}, true);
 			
 			/* 两个被切开的图 */
-			tu1=ReadBitMap(mContext, R.drawable.ic_1);
-			tu2=ReadBitMap(mContext, R.drawable.ic_2);	
+			mTu1=ReadBitMap(mContext, R.drawable.ic_1);
+			mTu2=ReadBitMap(mContext, R.drawable.ic_2);	
 		}
 		
 		public Bitmap ReadBitMap(Context context, int resId) 
@@ -190,17 +178,17 @@ public class Cutact extends Activity
 		
 		private void setCutState(int state) 
 		{
-			cut_state=state;			
+			mCutState=state;			
 		}
 		
 		public void UpdateTouchEvent(int x, int y) 
 		{
-			switch (cut_state) 
+			switch (mCutState) 
 			{
 			case GO_GO:
-				if (goButton.IsClick(x, y)) 
+				if (mGoButton.IsClick(x, y)) 
 				{
-					cut_state=GO_CUT;					
+					mCutState=GO_CUT;					
 				}
 				break;
 			}
@@ -208,13 +196,13 @@ public class Cutact extends Activity
 		
 		public void run()
 		{
-			while (isRunning) 
+			while (mIsRunning) 
 			{
-				synchronized (surfaceHolder) 
+				synchronized (mSurfaceHolder) 
 				{
-					mCanvas=surfaceHolder.lockCanvas();
+					mCanvas=mSurfaceHolder.lockCanvas();
 					doDraw();
-					surfaceHolder.unlockCanvasAndPost(mCanvas);
+					mSurfaceHolder.unlockCanvasAndPost(mCanvas);
 				}
 				try 
 				{
@@ -232,14 +220,14 @@ public class Cutact extends Activity
 		
 		public void surfaceCreated(SurfaceHolder surfaceHolder)
 		{
-			isRunning=true;
+			mIsRunning=true;
 			mThread=new Thread(this);
 			mThread.start();
 		}
 		
 		public void surfaceDestroyed(SurfaceHolder surfaceHolder)
 		{
-			isRunning=false;
+			mIsRunning=false;
 		}
 	}
 }
