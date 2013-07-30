@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -83,7 +84,7 @@ public class ActivityMain extends Activity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-		prepareListener();
+		prepareListener();       				// 安装好各种事件
 		initLayout();
 		this.mShowDataTView.clearComposingText();
 		mOpenHelper = new DatabaseHelper(this);
@@ -106,6 +107,7 @@ public class ActivityMain extends Activity
 		button5.setOnClickListener(listener5);
 		
 		mShowDataTView = (TextView)findViewById(R.id.textView1);
+		this.mShowDataTView.setMovementMethod(ScrollingMovementMethod.getInstance());
 	}
 
 	//按钮响应函数
@@ -171,6 +173,7 @@ public class ActivityMain extends Activity
 			db.execSQL("DROP TABLE IF EXISTS Subjects");
 			db.execSQL(sql);
 			setTitle("数据表成功重建");
+			this.showItems();
 		} 
 		catch (SQLException e) 
 		{
@@ -188,8 +191,10 @@ public class ActivityMain extends Activity
 		try 
 		{
 			db.execSQL(sql);
-			this.mShowDataTView.clearComposingText();
 			setTitle("数据表成功删除：" + sql);
+			this.mShowDataTView.setTextColor(Color.RED);
+			this.mShowDataTView.setTextSize(20.0f);
+			this.mShowDataTView.setText("Sid\t Body\t Answer\t IsAnswerd\n");
 		} 
 		catch (SQLException e) 
 		{
@@ -214,6 +219,7 @@ public class ActivityMain extends Activity
 			db.execSQL(sql1);
 			db.execSQL(sql2);
 			setTitle("插入两条数据成功");
+			this.showItems();
 		} 
 		catch (SQLException e) 
 		{
@@ -231,6 +237,7 @@ public class ActivityMain extends Activity
 			SQLiteDatabase db = mOpenHelper.getWritableDatabase();
 			db.delete(TABLE_NAME, " Sid = 1", null);
 			setTitle("删除Sid为1的记录");
+			this.showItems();
 		} 
 		catch (SQLException e) {}
 	}
