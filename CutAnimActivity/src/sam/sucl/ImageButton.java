@@ -6,6 +6,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 
 public class ImageButton 
@@ -39,6 +40,21 @@ public class ImageButton
     }
 
 
+    void drawText(Canvas canvas ,String text , float x ,float y,Paint paint ,float angle)
+    {
+        if(angle != 0)
+        {
+            canvas.rotate(angle, x, y); 
+        }
+        canvas.drawText(text, x, y, paint);
+        if(angle != 0)
+        {
+            canvas.rotate(-angle, x, y); 
+        }
+    }
+    
+    
+    
     /** *************************************************************************************************
      *       DESC :      ªÊ÷∆Õº∆¨∞¥≈•
      *       ARGC :
@@ -49,6 +65,20 @@ public class ImageButton
     public void DrawImageButton(Canvas canvas, Paint paint) 
     {
     	canvas.drawBitmap(mBitButton, mPosX, mPosY, paint);
+    	
+        Paint painter = new Paint();                
+        painter.setColor(Color.WHITE);
+        painter.setTextSize(20);                
+        canvas.drawLine(100, 100, 100, 400, painter);
+        drawText(canvas,"Hello", 80, 200, painter,-90);        
+        
+        painter.setColor(Color.RED);
+        painter.setTextSize(40);
+        drawText(canvas,"free", 150, 180, painter,-45);        
+        
+        paint.setColor(Color.BLUE);
+        drawText(canvas,"World", 150, 80, painter,0);
+        canvas.drawLine(100, 100, 400, 100, painter);
     }
     
     /** *************************************************************************************************

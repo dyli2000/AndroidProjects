@@ -25,40 +25,25 @@ import android.widget.*;
 public class Cutact extends Activity
 {
 	CutAV mCut=null;
-	TextView mSubjectView = null;
-	LinearLayout mLayout = null;
-	
 	public void onCreate(Bundle savedInstanceState)
 	{
 		try
 		{
-		super.onCreate(savedInstanceState);
-		/*  去掉标题  */
-		//requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setTitle("题目出现在标题");
-		
-		/*  设置全屏，即隐藏顶部的电池等  */
-		 getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		
-		 /*  从下往上运行，默认是从右到左  */
-		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-		
-		Display display=getWindowManager().getDefaultDisplay();
-		
-		
-		this.mSubjectView = new TextView(getApplicationContext());
-		this.mSubjectView.setText("题目会出现在这里！");
-		this.mSubjectView.setTextColor(Color.RED);
-				
-		mCut=new CutAV(this, display.getWidth(), display.getHeight());
-		
-		mLayout = new LinearLayout(getApplicationContext());
-		
-		mLayout.addView(mCut);
-		mLayout.addView(mSubjectView);
-		/*  设置活动的内容到一个特定的控件 */
-		//setContentView(mCut);
-		setContentView(mLayout);
+			super.onCreate(savedInstanceState);
+			/*  去掉标题  */
+			//requestWindowFeature(Window.FEATURE_NO_TITLE);
+			setTitle("题目出现在标题");
+			
+			/*  设置全屏，即隐藏顶部的电池等  */
+			 getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+			
+			 /*  从下往上运行，默认是从右到左  */
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+			
+			Display display=getWindowManager().getDefaultDisplay();
+			mCut=new CutAV(this, display.getWidth(), display.getHeight());
+			/*  设置活动的内容到一个特定的控件 */
+			setContentView(mCut);
 		}
 		catch(Exception e)
 		{
@@ -164,7 +149,6 @@ public class Cutact extends Activity
 			default:
 				break;
 			}		
-			
 		}
 
 		private void cutSt() 
@@ -184,7 +168,9 @@ public class Cutact extends Activity
 			mTuPosY=mScreenHeight/2;
 			
 			/* 创建动态进程的图 */
-			mAnimation = new Animation(mContext, new int[]{R.drawable.ic_launcher,R.drawable.ic_launcher1,R.drawable.ic_launcher2,R.drawable.ic_launcher3}, true);
+			mAnimation = new Animation(mContext, 
+															new int[]{R.drawable.ic_launcher,R.drawable.ic_launcher1,R.drawable.ic_launcher2,R.drawable.ic_launcher3}, 
+															true);
 			
 			/* 两个被切开的图 */
 			mTu1=ReadBitMap(mContext, R.drawable.ic_1);

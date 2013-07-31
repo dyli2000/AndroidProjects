@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 //
 public class Animation 
@@ -25,7 +26,7 @@ public class Animation
     private static final int ANIM_TIME = 1;
     
     /** *************************************************************************************************
-     *       DESC :     构造函数-1.
+     *       DESC :     构造函数-1，本工程暂时使用这个构造函数。
      *       ARGC :
      *                      @context:       
      *                      @frameBitmapID:       
@@ -72,7 +73,8 @@ public class Animation
     	Canvas.drawBitmap(mframeBitmap[frameID], x, y, paint);
     }
     
-   
+
+    
     /** *************************************************************************************************
      *       DESC :     绘制动画.
      *       ARGC :
@@ -83,7 +85,7 @@ public class Animation
      *---------------------------------------------------------------------------------------------------
      ****************************************************************************************************/        
     public void DrawAnimation(Canvas Canvas, Paint paint, int pointX, int pointY) 
-    {
+    {    	
 		//如果没有播放结束则继续播放
 		if (!mIsend) 
 		{

@@ -29,7 +29,6 @@ public final class R {
         public static final int radio2=0x7f050006;
         public static final int radioGroup1=0x7f050005;
         public static final int textView1=0x7f050001;
-        public static final int textView2=0x7f050009;
     }
     public static final class layout {
         public static final int main=0x7f030000;
