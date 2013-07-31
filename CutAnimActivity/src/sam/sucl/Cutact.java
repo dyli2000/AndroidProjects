@@ -19,25 +19,51 @@ import android.view.SurfaceView;
 import android.view.Window;
 import android.view.WindowManager;
 
+import android.widget.*;
+
 /*  主要动作处理界面  */
 public class Cutact extends Activity
 {
 	CutAV mCut=null;
-
+	TextView mSubjectView = null;
+	LinearLayout mLayout = null;
+	
 	public void onCreate(Bundle savedInstanceState)
 	{
+		try
+		{
 		super.onCreate(savedInstanceState);
 		/*  去掉标题  */
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		//requestWindowFeature(Window.FEATURE_NO_TITLE);
+		setTitle("题目出现在标题");
+		
 		/*  设置全屏，即隐藏顶部的电池等  */
 		 getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		/*  从下往上运行，默认是从右到左  */
+		
+		 /*  从下往上运行，默认是从右到左  */
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		
 		Display display=getWindowManager().getDefaultDisplay();
+		
+		
+		this.mSubjectView = new TextView(getApplicationContext());
+		this.mSubjectView.setText("题目会出现在这里！");
+		this.mSubjectView.setTextColor(Color.RED);
+				
 		mCut=new CutAV(this, display.getWidth(), display.getHeight());
+	
+		mLayout = new LinearLayout(getApplicationContext());
+		
+		mLayout.addView(mCut);
+		mLayout.addView(mSubjectView);
 		/*  设置活动的内容到一个特定的控件 */
-		setContentView(mCut);
+		//setContentView(mCut);
+		setContentView(mLayout);
+		}
+		catch(Exception e)
+		{
+			setTitle(e.toString());
+		}
 	}
 
     /** *************************************************************************************************
@@ -91,7 +117,7 @@ public class Cutact extends Activity
 		private Paint mPaint=null;
 		private SurfaceHolder mSurfaceHolder=null;
 		private boolean mIsRunning=false;
-		
+
 		public CutAV(Context context,int screenWidth,int screenHeight)
 		{
 			super(context);
@@ -104,7 +130,7 @@ public class Cutact extends Activity
 			
 			mSurfaceHolder=getHolder();
 			mSurfaceHolder.addCallback(this);
-			setFocusable(true);
+			setFocusable(true);			
 			
 			/* 主要是初始化一个动态大控件和两个被切开的分半的小控件  */
 			init();
