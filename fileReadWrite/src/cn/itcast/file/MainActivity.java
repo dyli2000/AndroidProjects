@@ -28,6 +28,7 @@ public class MainActivity extends Activity
         Button btnOpen = (Button) this.findViewById(R.id.btnOpen);
         btnOpen.setOnClickListener(new CBtnClickListener());
     }
+    
     private final class CBtnClickListener implements View.OnClickListener
     {
     	public void onClick(View v)
@@ -50,7 +51,6 @@ public class MainActivity extends Activity
     
     private final class ButtonClickListener implements View.OnClickListener
     {
-
 		public void onClick(View v) 
 		{
 			String filename = mNameText.getText().toString();      // Get file name.

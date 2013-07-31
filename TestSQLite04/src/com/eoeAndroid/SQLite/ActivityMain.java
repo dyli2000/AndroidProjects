@@ -69,7 +69,8 @@ public class ActivityMain extends Activity
 		}
 
 		@Override
-		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) 
+		{
 		}
 	}
 
