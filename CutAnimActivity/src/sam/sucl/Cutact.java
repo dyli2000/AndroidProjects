@@ -51,7 +51,7 @@ public class Cutact extends Activity
 		this.mSubjectView.setTextColor(Color.RED);
 				
 		mCut=new CutAV(this, display.getWidth(), display.getHeight());
-	
+		
 		mLayout = new LinearLayout(getApplicationContext());
 		
 		mLayout.addView(mCut);
