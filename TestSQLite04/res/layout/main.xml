@@ -10,12 +10,14 @@
         android:layout_height="wrap_content"
         android:text="插入两条记录" />
 
+   <LinearLayout
+   android:layout_width="match_parent"
+   android:layout_height="wrap_content" >
     <Button
         android:id="@+id/button4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="删除一条记录" />
-
     <Button
         android:id="@+id/button5"
         android:layout_width="wrap_content"
@@ -27,19 +29,66 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="删除数据表" />
-
-    <Button
+	</LinearLayout>
+    
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+        
+        <Button
         android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="重新建立数据表" />
 
-    <TextView
+    </LinearLayout>
+
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >    
+        
+    <Button
+        android:id="@+id/button7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/saveFile" />
+    <EditText
+        android:id="@+id/nameText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10" >
+        <requestFocus />
+    </EditText>
+    </LinearLayout>
+    
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >       
+    <Button
+        android:id="@+id/button8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/openFile" />
+
+    <EditText
+        android:id="@+id/contentText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10" />
+    </LinearLayout>
+    
+    
+        <TextView
         android:id="@+id/textView1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="243dp"
         android:scrollbars="vertical"
         android:singleLine="false"
         android:text="TextView" />
-
+    
 </LinearLayout>
+
+

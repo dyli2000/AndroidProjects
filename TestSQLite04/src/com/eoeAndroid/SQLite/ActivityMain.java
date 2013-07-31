@@ -1,5 +1,7 @@
 package com.eoeAndroid.SQLite;
 
+//import cn.itcast.file.R;
+//import cn.itcast.service.FileService;
 import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
@@ -8,36 +10,47 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.*;
 
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
 public class ActivityMain extends Activity
 {
-	OnClickListener listener1 = null;
-	OnClickListener listener2 = null;
-	OnClickListener listener3 = null;
-	OnClickListener listener4 = null;
-	OnClickListener listener5 = null;
-
-	Button button1;
-	Button button2;
-	Button button3;
-	Button button4;
-	Button button5;
+	OnClickListener mListener1 = null;
+	OnClickListener mListener2 = null;
+	OnClickListener mListener3 = null;
+	OnClickListener mListener4 = null;
+	OnClickListener mListener5 = null;
+	OnClickListener mListenSaveBtn = null;
+	OnClickListener mListenOpenBtn = null;
+	
+	Button mButton1;
+	Button mButton2;
+	Button mButton3;
+	Button mButton4;
+	Button mButton5;
+	Button mSaveBtn;
+	Button mOpenBtn;
+	
 	TextView mShowDataTView;
-
 	DatabaseHelper mOpenHelper;
-
-	private static final String DATABASE_NAME = "dbForTest.db";
+	EditText mNameText;
+	EditText  mContentText;
+	
+	private static final String DATABASE_NAME = "questionBank.db";
 	private static final int DATABASE_VERSION = 1;
-	private static final String TABLE_NAME = "Subjects";
-	private static final String SID = "Sid";
-	private static final String BODY = "Body";
+	private static final String TABLE_NAME = "Subject";
+	private static final String SID = "SubjectId";
+	private static final String BODY = "SubjectBody";
 	private static final String ANSWER  = "Answer";
-	private static final String IS_ANSWER_CORRECTLY = "IsAnswerCorrectly";   
+	private static final String IS_CORRECTED = "IsCorrected";   
 	
 	private static class DatabaseHelper extends SQLiteOpenHelper 
 	{
@@ -57,15 +70,23 @@ public class ActivityMain extends Activity
 		@Override
 		public void onCreate(SQLiteDatabase db) 
 		{
-			String sql = "CREATE TABLE " + TABLE_NAME + " (" 
-							  + SID + " int not null, " 
-							  + BODY + " text not null, " 
-							  +  ANSWER +" text no null," 
-							  +  IS_ANSWER_CORRECTLY + " int no null"
-							  + ");";
-			
-			Log.i("giggle:createDB=", sql);
-			db.execSQL(sql);
+			try
+			{
+				String sql = "CREATE TABLE " + TABLE_NAME + " (" 
+								  + SID + " int not null, " 
+								  + BODY + " text not null, " 
+								  +  ANSWER +" text no null," 
+								  +  IS_CORRECTED + " int no null"
+								  + ");";
+				
+				Log.i("giggle:createDB=", sql);
+				db.execSQL(sql);
+			}
+			catch(Exception e)
+			{
+				//setTitle(e.toString());
+				Log.i("In onCreate .... ",e.toString());
+			}
 		}
 
 		@Override
@@ -83,78 +104,189 @@ public class ActivityMain extends Activity
 	@Override
 	public void onCreate(Bundle savedInstanceState) 
 	{
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main);
-		prepareListener();       				// 安装好各种事件
-		initLayout();
-		this.mShowDataTView.clearComposingText();
-		mOpenHelper = new DatabaseHelper(this);
+		try
+		{
+			super.onCreate(savedInstanceState);
+			setContentView(R.layout.main);
+			prepareListener();       				// 安装好各种事件
+			initLayout();
+			this.mShowDataTView.clearComposingText();
+			mOpenHelper = new DatabaseHelper(this);
+		}
+		catch(Exception e)
+		{
+			this.mContentText.setText(e.toString());
+		}
 	}
 
 	private void initLayout() 
 	{
-		button1 = (Button) findViewById(R.id.button1);
-		button1.setOnClickListener(listener1);
-
-		button2 = (Button) findViewById(R.id.button2);
-		button2.setOnClickListener(listener2);
-
-		button3 = (Button) findViewById(R.id.button3);
-		button3.setOnClickListener(listener3);
-		button4 = (Button) findViewById(R.id.button4);
-		button4.setOnClickListener(listener4);
-
-		button5 = (Button) findViewById(R.id.button5);
-		button5.setOnClickListener(listener5);
+		try
+		{
+			mButton1 = (Button) findViewById(R.id.button1);
+			mButton1.setOnClickListener(mListener1);
+	
+			mButton2 = (Button) findViewById(R.id.button2);
+			mButton2.setOnClickListener(mListener2);
+	
+			mButton3 = (Button) findViewById(R.id.button3);
+			mButton3.setOnClickListener(mListener3);
+			mButton4 = (Button) findViewById(R.id.button4);
+			mButton4.setOnClickListener(mListener4);
+	
+			mButton5 = (Button) findViewById(R.id.button5);
+			mButton5.setOnClickListener(mListener5);
 		
-		mShowDataTView = (TextView)findViewById(R.id.textView1);
-		this.mShowDataTView.setMovementMethod(ScrollingMovementMethod.getInstance());
+			mSaveBtn = (Button) findViewById(R.id.button7);
+			mSaveBtn.setOnClickListener(mListenSaveBtn);
+			mOpenBtn = (Button) findViewById(R.id.button8);
+			mOpenBtn.setOnClickListener(mListenOpenBtn);
+			
+			this.mNameText = (EditText)findViewById(R.id.nameText);
+			this.mContentText = (EditText)findViewById(R.id.contentText);
+			
+			mShowDataTView = (TextView)findViewById(R.id.textView1);
+			this.mShowDataTView.setMovementMethod(ScrollingMovementMethod.getInstance());  // 设置textView可滚动
+		}
+		catch(Exception e)
+		{
+			setTitle(e.toString());
+		}
 	}
 
 	//按钮响应函数
 	private void prepareListener() 
 	{
-		listener1 = new OnClickListener() 
+		try
 		{
-			public void onClick(View v) 
+			mListener1 = new OnClickListener() 
 			{
-				createTable();
-			}
-		};
+				public void onClick(View v) 
+				{
+					createTable();
+				}
+			};
+			
+			mListener2 = new OnClickListener() 
+			{
+				public void onClick(View v) 
+				{
+					dropTable();
+				}
+			};
+			
+			mListener3 = new OnClickListener() 
+			{
+				public void onClick(View v) 
+				{
+					insertItem();
+				}
+			};
+			
+			mListener4 = new OnClickListener() 
+			{
+				public void onClick(View v) 
+				{
+					deleteItem();
+				}
+			};
+			
+			mListener5 = new OnClickListener() 
+			{
+				public void onClick(View v) 
+				{
+					showItems();
+				}
+			};
+			
+			this.mListenSaveBtn = new OnClickListener()
+			{
+				public void onClick(View v)
+				{
+					saveTextToFile();
+				}
+			};
+			
+			this.mListenOpenBtn = new OnClickListener()
+			{
+				public void onClick(View v)
+				{
+					openText();
+				}
+			};
 		
-		listener2 = new OnClickListener() 
+		}
+		catch(Exception e)
 		{
-			public void onClick(View v) 
-			{
-				dropTable();
-			}
-		};
-		
-		listener3 = new OnClickListener() 
-		{
-			public void onClick(View v) 
-			{
-				insertItem();
-			}
-		};
-		
-		listener4 = new OnClickListener() 
-		{
-			public void onClick(View v) 
-			{
-				deleteItem();
-			}
-		};
-		
-		listener5 = new OnClickListener() 
-		{
-			public void onClick(View v) 
-			{
-				showItems();
-			}
-		};
+			setTitle(e.toString());
+		}
 	}
 
+	
+	private void insertRecords(String sqlcmdList) 
+	{
+		SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+		String[] lines = sqlcmdList.split("\n");
+		try 
+		{
+			for(String line : lines)
+			{
+				mContentText.setText(line);
+				db.execSQL(line);
+			}
+		} 
+		catch (SQLException e) 
+		{
+			setTitle(e.toString());
+		}
+	}
+	
+	
+	private void openText()
+	{
+		String fileName = mNameText.getText().toString();
+		CFileService service = new CFileService(getApplicationContext());
+		try 
+		{
+			String result = service.ReadFromSDCard(fileName);
+			//mContentText.setText("Read string from " + fileName + "\n" + result);
+			insertRecords(result);
+		} 
+		catch (Exception e) 
+		{
+			//setTitle(e.toString());
+			setTitle(Environment.getExternalStorageDirectory().toString() + "/" + mNameText.getText());
+			mContentText.setText(e.toString());
+		}
+	}
+	
+	private void saveTextToFile()
+	{
+		String filename = mNameText.getText().toString();      // Get file name.
+		String content = mContentText.getText().toString();   // Get file content.
+		CFileService service = new CFileService(getApplicationContext());
+		setTitle("准备存储文件！");
+		try 
+		{
+			/* 检测是否存在外扩的SD卡 */
+			if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED))
+			{
+				service.saveToSDCard(filename, content);
+				Toast.makeText(getApplicationContext(), R.string.success, 1).show();
+			}
+			else
+			{
+				Toast.makeText(getApplicationContext(), R.string.sdcardnoexsit, 1).show();
+			}
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+			Toast.makeText(getApplicationContext(), R.string.fail, 1).show();
+		}
+	}
+	
+	
 	/*
 	 * 重新建立数据表
 	 */
@@ -165,13 +297,13 @@ public class ActivityMain extends Activity
 						  + SID + " int not null, " 
 						  + BODY + " text not null, " 
 						  +  ANSWER +" text no null," 
-						  +  IS_ANSWER_CORRECTLY + " int no null"
+						  +  IS_CORRECTED + " int no null"
 						  + ");";
 		
 		Log.i("giggle:createDB=", sql);
 		try 
 		{
-			db.execSQL("DROP TABLE IF EXISTS Subjects");
+			db.execSQL("DROP TABLE IF EXISTS Subject");
 			db.execSQL(sql);
 			setTitle("数据表成功重建");
 			this.showItems();
@@ -209,9 +341,9 @@ public class ActivityMain extends Activity
 	private void insertItem() 
 	{
 		SQLiteDatabase db = mOpenHelper.getWritableDatabase();
-		String sql1 = "insert into " + TABLE_NAME + " (" + SID + ", " + BODY+ "," + ANSWER + "," + IS_ANSWER_CORRECTLY +")" +
+		String sql1 = "insert into " + TABLE_NAME + " (" + SID + ", " + BODY+ "," + ANSWER + "," + IS_CORRECTED +")" +
 							" values(1,'常见的设计模式有多少种?', 23, 0);";
-		String sql2 = "insert into " + TABLE_NAME + " (" + SID + ", " + BODY+ "," + ANSWER + "," + IS_ANSWER_CORRECTLY +")" +
+		String sql2 = "insert into " + TABLE_NAME + " (" + SID + ", " + BODY+ "," + ANSWER + "," + IS_CORRECTED +")" +
 							" values(2,'NBA常规赛有多少场?', 81, 0);";		
 		try 
 		{
@@ -220,7 +352,7 @@ public class ActivityMain extends Activity
 			db.execSQL(sql1);
 			db.execSQL(sql2);
 			setTitle("插入两条数据成功");
-			this.showItems();
+			//this.showItems();
 		} 
 		catch (SQLException e) 
 		{
@@ -236,8 +368,8 @@ public class ActivityMain extends Activity
 		try 
 		{
 			SQLiteDatabase db = mOpenHelper.getWritableDatabase();
-			db.delete(TABLE_NAME, " Sid = 1", null);
-			setTitle("删除Sid为1的记录");
+			db.delete(TABLE_NAME, " SubjectId = 1", null);
+			setTitle("删除SubjectId为1的记录");
 			this.showItems();
 		} 
 		catch (SQLException e) {}
@@ -253,13 +385,13 @@ public class ActivityMain extends Activity
 			SQLiteDatabase db = mOpenHelper.getReadableDatabase();
 			String result = "";
 			Cursor cur = db.query(TABLE_NAME, null, null, null, null, null, null);
-			int  sidIndex = cur.getColumnIndex("Sid");
-			int bodyIndex = cur.getColumnIndex("Body");
+			int  sidIndex = cur.getColumnIndex("SubjectId");
+			int bodyIndex = cur.getColumnIndex("SubjectBody");
 			int answerIndex = cur.getColumnIndex("Answer");
-			int isOkIndex = cur.getColumnIndex("IsAnswerCorrectly");
+			int isOkIndex = cur.getColumnIndex("IsCorrected");
 			
 			if(cur == null)
-				return;
+				return; 
 			for(cur.moveToFirst(); !(cur.isAfterLast());cur.moveToNext())
 			{
 				result = result + cur.getInt(sidIndex) + "\t";
@@ -272,7 +404,7 @@ public class ActivityMain extends Activity
 			setTitle(Integer.toString(num) + " 条记录");	
 			this.mShowDataTView.setTextColor(Color.RED);
 			this.mShowDataTView.setTextSize(20.0f);
-			this.mShowDataTView.setText("Sid\t Body\t Answer\t IsAnswerd\n"+result);
+			this.mShowDataTView.setText("Sid\t Body\t Answer\t IsCorrected\n"+result);
 		}
 		catch(Exception e)
 		{

@@ -66,7 +66,8 @@ public class FileService
 	public String read(String filename) throws Exception
 	{
 		ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-		//FileInputStream inStream = context.openFileInput(Environment.getExternalStorageDirectory().toString()+"/" + filename);
+		// The error usage.
+		// FileInputStream inStream = context.openFileInput(Environment.getExternalStorageDirectory().toString()+"/" + filename);
 		FileInputStream inStream = new FileInputStream(Environment.getExternalStorageDirectory() +"/" + filename);
 		byte[] buffer = new byte[1024];
 		int len = 0;

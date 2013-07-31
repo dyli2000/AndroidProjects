@@ -2,4 +2,10 @@
 <resources>
     <string name="hello">Hello World, ActivityMain</string>
     <string name="app_name">SQLite数据库操作</string>
+    <string name="readSql">读入SQL语句</string>
+    <string name="success">文件保存完成</string>
+    <string name="fail">文件保存失败</string>
+    <string name="sdcardnoexsit">SDCard不存在或者写保护 </string>
+    <string name="saveFile">保存</string>
+    <string name="openFile">打开</string>
 </resources>

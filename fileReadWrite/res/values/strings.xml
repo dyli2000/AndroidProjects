@@ -7,6 +7,7 @@
     <string name="button">保存</string>
     <string name="success">文件保存完成</string>
     <string name="fail">文件保存失败</string>
-    <string name="sdcardnoexsit">SDCard不存在或者写保护</string><string name="btnOpen">打开</string>
+    <string name="sdcardnoexsit">SDCard不存在或者写保护
+    </string><string name="btnOpen">打开</string>
     
 </resources>
