@@ -13,21 +13,27 @@ public final class R {
     public static final class drawable {
         public static final int ic_1=0x7f020000;
         public static final int ic_2=0x7f020001;
-        public static final int ic_button=0x7f020002;
-        public static final int ic_launcher=0x7f020003;
-        public static final int ic_launcher1=0x7f020004;
-        public static final int ic_launcher2=0x7f020005;
-        public static final int ic_launcher3=0x7f020006;
+        public static final int ic_2b=0x7f020002;
+        public static final int ic_button=0x7f020003;
+        public static final int ic_buttonb=0x7f020004;
+        public static final int ic_launcher=0x7f020005;
+        public static final int ic_launcher1=0x7f020006;
+        public static final int ic_launcher1b=0x7f020007;
+        public static final int ic_launcher2=0x7f020008;
+        public static final int ic_launcher2b=0x7f020009;
+        public static final int ic_launcher3=0x7f02000a;
+        public static final int ic_launcher3b=0x7f02000b;
+        public static final int ic_launcherb=0x7f02000c;
     }
     public static final class id {
-        public static final int Button01=0x7f050004;
         public static final int button1=0x7f050000;
-        public static final int button2=0x7f050002;
-        public static final int editText1=0x7f050003;
+        public static final int importBtn=0x7f050002;
+        public static final int nameText=0x7f050003;
         public static final int radio0=0x7f050007;
         public static final int radio1=0x7f050008;
         public static final int radio2=0x7f050006;
         public static final int radioGroup1=0x7f050005;
+        public static final int setErrorBtn=0x7f050004;
         public static final int textView1=0x7f050001;
     }
     public static final class layout {

@@ -31,8 +31,8 @@ public class Cutact extends Activity
 		{
 			super.onCreate(savedInstanceState);
 			/*  去掉标题  */
-			//requestWindowFeature(Window.FEATURE_NO_TITLE);
-			setTitle("题目出现在标题");
+			requestWindowFeature(Window.FEATURE_NO_TITLE);
+			//setTitle("题目出现在标题");
 			
 			/*  设置全屏，即隐藏顶部的电池等  */
 			 getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -88,11 +88,14 @@ public class Cutact extends Activity
 		
 		private int mCutState=GO_GO;
 		private Animation  mAnimation=null;
+		private Animation  mAnimation1 = null;
+		
 		private int mTuPosX= 0;
 		private int mTuPosY= 0;
 		private Bitmap mTu1=null;
 		private Bitmap mTu2=null;
 		private ImageButton mGoButton=null;
+		private ImageButton mGoButton1= null;
 		
 		private int mMove=20;
 		private int mMoveCount=0;
@@ -133,8 +136,11 @@ public class Cutact extends Activity
 				/*  如果到达顶部，重新置0 */
 				if(mTuPosX - 10 <= 0)
 					mTuPosX = mScreenWidth;
-				mGoButton=new ImageButton(mContext, R.drawable.ic_launcher, mTuPosX, mTuPosY);
+				mGoButton=new ImageButton(mContext, R.drawable.ic_launcher, mTuPosX, mTuPosY+68);
 				mGoButton.DrawImageButton(mCanvas, mPaint);
+				
+				mGoButton1=new ImageButton(mContext, R.drawable.ic_launcherb, mTuPosX, mTuPosY-128);
+				mGoButton1.DrawImageButton(mCanvas, mPaint);
 				break;
 				
 			case GO_CUT:
@@ -171,9 +177,12 @@ public class Cutact extends Activity
 			mAnimation = new Animation(mContext, 
 															new int[]{R.drawable.ic_launcher,R.drawable.ic_launcher1,R.drawable.ic_launcher2,R.drawable.ic_launcher3}, 
 															true);
+			mAnimation1 = new Animation(mContext, 
+															new int[]{R.drawable.ic_launcherb,R.drawable.ic_launcher1b,R.drawable.ic_launcher2b,R.drawable.ic_launcher3b}, 
+															true);
 			
 			/* 两个被切开的图 */
-			mTu1=ReadBitMap(mContext, R.drawable.ic_1);
+			mTu1 =ReadBitMap(mContext, R.drawable.ic_1);
 			mTu2=ReadBitMap(mContext, R.drawable.ic_2);	
 		}
 		
@@ -201,6 +210,11 @@ public class Cutact extends Activity
 				if (mGoButton.IsClick(x, y)) 
 				{
 					mCutState=GO_CUT;					
+				}
+				
+				if (mGoButton1.IsClick(x, y))
+				{
+					mCutState = GO_CUT;
 				}
 				break;
 			}
