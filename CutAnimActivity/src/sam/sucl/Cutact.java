@@ -31,8 +31,8 @@ public class Cutact extends Activity
 		{
 			super.onCreate(savedInstanceState);
 			/*  去掉标题  */
-			requestWindowFeature(Window.FEATURE_NO_TITLE);
-			//setTitle("题目出现在标题");
+			//requestWindowFeature(Window.FEATURE_NO_TITLE);
+			setTitle("题目出现在标题");
 			
 			/*  设置全屏，即隐藏顶部的电池等  */
 			 getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -128,33 +128,54 @@ public class Cutact extends Activity
 		
 		protected void doDraw()
 		{
-			switch (mCutState) 
+			try
 			{
-			case GO_GO:
-				mTuPosX -=20;  // 每次步进 10 宽度
-				mCanvas.drawColor(Color.BLACK);
-				/*  如果到达顶部，重新置0 */
-				if(mTuPosX - 10 <= 0)
-					mTuPosX = mScreenWidth;
-				mGoButton=new ImageButton(mContext, R.drawable.ic_launcher, mTuPosX, mTuPosY+68);
-				mGoButton.DrawImageButton(mCanvas, mPaint);
-				
-				mGoButton1=new ImageButton(mContext, R.drawable.ic_launcherb, mTuPosX, mTuPosY-128);
-				mGoButton1.DrawImageButton(mCanvas, mPaint);
-				break;
-				
-			case GO_CUT:
-				mCanvas.drawColor(Color.GREEN);
-				mMove+=2;
-				mMoveCount++;
-				mCanvas.drawBitmap(mTu1, mTuPosX,mTuPosY-mMove, mPaint);
-				mCanvas.drawBitmap(mTu2, mTuPosX,mTuPosY+mMove, mPaint);
-				cutSt();
-				break;
-				
-			default:
-				break;
-			}		
+				switch (mCutState) 
+				{
+				case GO_GO:
+					mTuPosX -=20;  // 每次步进 10 宽度
+					mCanvas.drawColor(Color.BLACK);
+					/*  如果到达顶部，重新置0 */
+					if(mTuPosX - 10 <= 0)
+						mTuPosX = mScreenWidth;
+					
+					GlobalData.CSubject subject1= null;
+					GlobalData.CSubject subject2 = null;
+					subject1.SubjectBody = "Kobe is which team of nba?";
+					subject1.Answer = "Laker";
+					subject1.SubjectId = 100;
+					subject1.IsCorrected = 0;
+					
+					subject2.SubjectBody = "James is which team of nba?";
+					subject2.Answer = "Heats";
+					subject2.SubjectId = 101;
+					subject2.IsCorrected = 0;
+					
+					mGoButton=new ImageButton(mContext, R.drawable.ic_launcher, mTuPosX, mTuPosY+68);
+					mGoButton.DrawImageButton(mCanvas, mPaint);
+					mGoButton.DrawSubjectAndAnswer(mCanvas, mPaint,subject1,subject2);
+					
+					mGoButton1=new ImageButton(mContext, R.drawable.ic_launcherb, mTuPosX, mTuPosY-128);
+					mGoButton1.DrawImageButton(mCanvas, mPaint);
+					break;
+					
+				case GO_CUT:
+					mCanvas.drawColor(Color.GREEN);
+					mMove+=2;
+					mMoveCount++;
+					mCanvas.drawBitmap(mTu1, mTuPosX,mTuPosY-mMove, mPaint);
+					mCanvas.drawBitmap(mTu2, mTuPosX,mTuPosY+mMove, mPaint);
+					cutSt();
+					break;
+					
+				default:
+					break;
+				}		
+			}
+			catch(Exception e)
+			{
+				setTitle(e.toString());
+			}
 		}
 
 		private void cutSt() 

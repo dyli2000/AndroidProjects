@@ -65,21 +65,60 @@ public class ImageButton
     public void DrawImageButton(Canvas canvas, Paint paint) 
     {
     	canvas.drawBitmap(mBitButton, mPosX, mPosY, paint);
-    	
-        Paint painter = new Paint();                
-        painter.setColor(Color.WHITE);
-        painter.setTextSize(20);                
-        canvas.drawLine(100, 100, 100, 400, painter);
-        drawText(canvas,"Hello", 80, 200, painter,-90);        
-        
-        painter.setColor(Color.RED);
-        painter.setTextSize(40);
-        drawText(canvas,"free", 150, 180, painter,-45);        
-        
-        paint.setColor(Color.BLUE);
-        drawText(canvas,"World", 150, 80, painter,0);
-        canvas.drawLine(100, 100, 400, 100, painter);
     }
+    
+    public void DrawSubjectAndAnswer(Canvas canvas,Paint paint,GlobalData.CSubject a,GlobalData.CSubject b)
+    {
+    	try
+    	{
+			GlobalData.CSubject subject1;
+			GlobalData.CSubject subject2;
+			subject1.SubjectBody = "Kobe is which team of nba?";
+			subject1.Answer = "Laker";
+			subject1.SubjectId = 100;
+			subject1.IsCorrected = 0;
+			
+			subject2.SubjectBody = "James is which team of nba?";
+			subject2.Answer = "Heats";
+			subject2.SubjectId = 101;
+			subject2.IsCorrected = 0;
+    		
+	        Paint painter = new Paint();                
+	        painter.setColor(Color.WHITE);
+	        painter.setTextSize(20);                
+	        canvas.drawLine(100, 100, 100, 400, painter);
+	        drawText(canvas,subject1.SubjectBody, 80, 200, painter,-90);        
+	        
+	        painter.setColor(Color.RED);
+	        painter.setTextSize(40);
+	        //drawText(canvas,"free", 150, 180, painter,-45);
+	        drawText(canvas,subject1.Answer, 150, 180, painter,-90);
+	        
+	        paint.setColor(Color.BLUE);
+	        drawText(canvas,subject2.Answer, 150, 80, painter,0);
+	        canvas.drawLine(100, 100, 400, 100, painter);
+    	}
+    	catch(Exception e)
+    	{
+    	}
+        
+//   Relate sentences:    	
+//        Paint painter = new Paint();                
+//        painter.setColor(Color.WHITE);
+//        painter.setTextSize(20);                
+//        canvas.drawLine(100, 100, 100, 400, painter);
+//        drawText(canvas,"Hello", 80, 200, painter,-90);        
+//        
+//        painter.setColor(Color.RED);
+//        painter.setTextSize(40);
+//        //drawText(canvas,"free", 150, 180, painter,-45);
+//        drawText(canvas,"free", 150, 180, painter,-90);
+//        
+//        paint.setColor(Color.BLUE);
+//        drawText(canvas,"World", 150, 80, painter,0);
+//        canvas.drawLine(100, 100, 400, 100, painter);
+    }
+    
     
     /** *************************************************************************************************
      *       DESC :      判断是否点中图片按钮
