@@ -38,7 +38,7 @@ public class Cutact extends Activity
 			 getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 			
 			 /*  从下往上运行，默认是从右到左  */
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);  // 横向
 			
 			Display display=getWindowManager().getDefaultDisplay();
 			mCut=new CutAV(this, display.getWidth(), display.getHeight());
@@ -139,17 +139,8 @@ public class Cutact extends Activity
 					if(mTuPosX - 10 <= 0)
 						mTuPosX = mScreenWidth;
 					
-					GlobalData.CSubject subject1= null;
-					GlobalData.CSubject subject2 = null;
-					subject1.SubjectBody = "Kobe is which team of nba?";
-					subject1.Answer = "Laker";
-					subject1.SubjectId = 100;
-					subject1.IsCorrected = 0;
-					
-					subject2.SubjectBody = "James is which team of nba?";
-					subject2.Answer = "Heats";
-					subject2.SubjectId = 101;
-					subject2.IsCorrected = 0;
+		    		GlobalData subject1 = new GlobalData(102, "James is which team of nba?", "Heats", 0);
+					GlobalData subject2 = new GlobalData(102, "James is which team of nba?", "Heats", 0);
 					
 					mGoButton=new ImageButton(mContext, R.drawable.ic_launcher, mTuPosX, mTuPosY+68);
 					mGoButton.DrawImageButton(mCanvas, mPaint);

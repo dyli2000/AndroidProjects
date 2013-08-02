@@ -1,7 +1,6 @@
 package sam.sucl;
 
 import java.io.InputStream;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -21,7 +20,7 @@ public class ImageButton
     private int mWidth =0;
     private int mHeight =0;
   
-    /** *************************************************************************************************
+    /* *************************************************************************************************
      *       DESC :      构造函数负责获得一个BitMap
      *       ARGC :
      *                      @context:        
@@ -38,24 +37,9 @@ public class ImageButton
 		mWidth = mBitButton.getWidth();
 		mHeight = mBitButton.getHeight();
     }
-
-
-    void drawText(Canvas canvas ,String text , float x ,float y,Paint paint ,float angle)
-    {
-        if(angle != 0)
-        {
-            canvas.rotate(angle, x, y); 
-        }
-        canvas.drawText(text, x, y, paint);
-        if(angle != 0)
-        {
-            canvas.rotate(-angle, x, y); 
-        }
-    }
     
     
-    
-    /** *************************************************************************************************
+    /* *************************************************************************************************
      *       DESC :      绘制图片按钮
      *       ARGC :
      *                      @canvas:        画图的一个工具类
@@ -66,36 +50,44 @@ public class ImageButton
     {
     	canvas.drawBitmap(mBitButton, mPosX, mPosY, paint);
     }
+
+    /* *************************************************************************************************
+     *       DESC :    通过画布的旋转来实现文字的显示效果
+     *       ARGC :
+     *---------------------------------------------------------------------------------------------------
+     ****************************************************************************************************/  
+    void drawText(Canvas canvas ,String text , float x ,float y,Paint paint ,float angle)
+    {
+    	if(angle != 0)
+        {
+        	 /* 对画布旋转，再画文本 */
+            canvas.rotate(angle, x, y);   
+        }
+        canvas.drawText(text, x, y, paint);
+        
+        /*  使用画布恢初始状，以便画下一句文字时再进行旋转*/
+        if(angle != 0)
+        {
+            canvas.rotate(-angle, x, y); 
+        }
+    }
     
-    public void DrawSubjectAndAnswer(Canvas canvas,Paint paint,GlobalData.CSubject a,GlobalData.CSubject b)
+    public void DrawSubjectAndAnswer(Canvas canvas,Paint paint,GlobalData subject1,GlobalData subject2)
     {
     	try
     	{
-			GlobalData.CSubject subject1;
-			GlobalData.CSubject subject2;
-			subject1.SubjectBody = "Kobe is which team of nba?";
-			subject1.Answer = "Laker";
-			subject1.SubjectId = 100;
-			subject1.IsCorrected = 0;
-			
-			subject2.SubjectBody = "James is which team of nba?";
-			subject2.Answer = "Heats";
-			subject2.SubjectId = 101;
-			subject2.IsCorrected = 0;
-    		
 	        Paint painter = new Paint();                
 	        painter.setColor(Color.WHITE);
 	        painter.setTextSize(20);                
 	        canvas.drawLine(100, 100, 100, 400, painter);
-	        drawText(canvas,subject1.SubjectBody, 80, 200, painter,-90);        
+	        drawText(canvas,subject1.MSubjectBody, 20, 200, painter,-90);
 	        
 	        painter.setColor(Color.RED);
 	        painter.setTextSize(40);
-	        //drawText(canvas,"free", 150, 180, painter,-45);
-	        drawText(canvas,subject1.Answer, 150, 180, painter,-90);
+	        drawText(canvas,subject1.MAnswer, 40, 180, painter,-90);
 	        
 	        paint.setColor(Color.BLUE);
-	        drawText(canvas,subject2.Answer, 150, 80, painter,0);
+	        drawText(canvas,subject2.MAnswer, 60, 80, painter,-90);
 	        canvas.drawLine(100, 100, 400, 100, painter);
     	}
     	catch(Exception e)
@@ -120,7 +112,7 @@ public class ImageButton
     }
     
     
-    /** *************************************************************************************************
+    /* *************************************************************************************************
      *       DESC :      判断是否点中图片按钮
      *       ARGC :
      *                      @pointX:        X坐标
@@ -138,7 +130,7 @@ public class ImageButton
 		return isClick;
     }
     
-    /** *************************************************************************************************
+    /* *************************************************************************************************
      *       DESC :      读取图片资源
      *       ARGC :
      *                      @context:      上下文
