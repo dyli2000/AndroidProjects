@@ -84,7 +84,7 @@ public class Animation
      *                      @pointY:
      *---------------------------------------------------------------------------------------------------
      ****************************************************************************************************/        
-    public void DrawAnimation(Canvas Canvas, Paint paint, int pointX, int pointY) 
+	public void DrawAnimation(Canvas Canvas, Paint paint, int pointX, int pointY) 
     {    	
 		//如果没有播放结束则继续播放
 		if (!mIsend) 

@@ -133,14 +133,21 @@ public class Cutact extends Activity
 				switch (mCutState) 
 				{
 				case GO_GO:
-					mTuPosX -=20;  // 每次步进 10 宽度
+					mTuPosX -=20;  // 每次步进 20 宽度
 					mCanvas.drawColor(Color.BLACK);
+					GlobalData subject1;
+					
 					/*  如果到达顶部，重新置0 */
 					if(mTuPosX - 10 <= 0)
+					{
 						mTuPosX = mScreenWidth;
-					
-		    		GlobalData subject1 = new GlobalData(102, "James is which team of nba?", "Heats", 0);
-					GlobalData subject2 = new GlobalData(102, "James is which team of nba?", "Heats", 0);
+						subject1 =  new GlobalData(103, "Jordan is which team of nba?", "Bulls", 0);
+					}
+					else
+					{
+						subject1 = new GlobalData(101, "James is which team of nba?", "Heats", 0);
+					}
+					GlobalData subject2 = new GlobalData(102, "Kobe is which team of nba?", "Lakers", 0);
 					
 					mGoButton=new ImageButton(mContext, R.drawable.ic_launcher, mTuPosX, mTuPosY+68);
 					mGoButton.DrawImageButton(mCanvas, mPaint);
@@ -244,7 +251,7 @@ public class Cutact extends Activity
 				}
 				try 
 				{
-					Thread.sleep(200);
+					Thread.sleep(500);
 				} catch (InterruptedException e)
 				{
 					e.printStackTrace();

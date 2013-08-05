@@ -80,14 +80,14 @@ public class ImageButton
 	        painter.setColor(Color.WHITE);
 	        painter.setTextSize(20);                
 	        canvas.drawLine(100, 100, 100, 400, painter);
-	        drawText(canvas,subject1.MSubjectBody, 20, 200, painter,-90);
+	        drawText(canvas,subject1.MSubjectBody, 58, 388, painter,-90);
 	        
 	        painter.setColor(Color.RED);
 	        painter.setTextSize(40);
-	        drawText(canvas,subject1.MAnswer, 40, 180, painter,-90);
+	        drawText(canvas,"A " + subject1.MAnswer, 258, 180, painter,0);
 	        
 	        paint.setColor(Color.BLUE);
-	        drawText(canvas,subject2.MAnswer, 60, 80, painter,-90);
+	        drawText(canvas,"B " + subject2.MAnswer, 258, 80, painter,0);
 	        canvas.drawLine(100, 100, 400, 100, painter);
     	}
     	catch(Exception e)
