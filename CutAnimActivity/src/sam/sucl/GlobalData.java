@@ -16,6 +16,19 @@ public class GlobalData
 			this.MAnswer = answer;
 			this.MIsCorrected = isCorrected;
 		}
+		
+		public GlobalData()
+		{
+			// Do nothing this method.
+		}
+		
+		public void SetAttributes(int subjectId,String subjectBody,String answer,int isCorrected)
+		{
+			this.MSubjectId = subjectId;
+			this.MSubjectBody = subjectBody;
+			this.MAnswer = answer;
+			this.MIsCorrected = isCorrected;
+		}
 //	}
 
 }

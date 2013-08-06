@@ -16,19 +16,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.*;
 
-//import net.sourceforge.jtds.jdbc.Driver;
-
 /* 主要负责界面启动外框的初始工作 */
 public class CutAnimActivity extends   Activity 
 {
-	private static final String DATABASE_NAME = "questionBank.db";
-	private static final int DATABASE_VERSION = 1;
 	private static final String TABLE_NAME = "Subject";
-	private static final String SID = "SubjectId";
-	private static final String BODY = "SubjectBody";
-	private static final String ANSWER  = "Answer";
-	private static final String IS_CORRECTED = "IsCorrected";   
-	
 	OnClickListener mImportListener;
 	OnClickListener mSetErrorListener;
 	OnClickListener mEnterListener;
@@ -43,37 +34,37 @@ public class CutAnimActivity extends   Activity
     Button mSetErrorBtn = null;
     EditText mNameText = null;
 	
-	public static class CDatabaseHelper extends SQLiteOpenHelper
-	{
-		CDatabaseHelper(Context context)
-		{
-			/* 通过DatabaseHelper 帮助创建database  */
-			super(context, DATABASE_NAME, null, DATABASE_VERSION);
-		}
-
-		@Override
-		public void onCreate(SQLiteDatabase db) 
-		{
-			try
-			{
-				String sql = "CREATE TABLE " + TABLE_NAME + " (" 
-								  + SID + " int not null, " 
-								  + BODY + " text not null, " 
-								  +  ANSWER +" text no null," 
-								  +  IS_CORRECTED + " int no null"
-								  + ");";
-				db.execSQL(sql);
-			}
-			catch(Exception e)
-			{
-				Log.i("In onCreate .... ",e.toString());
-			}
-		}
-
-		@Override
-		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		}
-	};
+//	public static class CDatabaseHelper extends SQLiteOpenHelper
+//	{
+//		CDatabaseHelper(Context context)
+//		{
+//			/* 通过DatabaseHelper 帮助创建database  */
+//			super(context, DATABASE_NAME, null, DATABASE_VERSION);
+//		}
+//
+//		@Override
+//		public void onCreate(SQLiteDatabase db) 
+//		{
+//			try
+//			{
+//				String sql = "CREATE TABLE " + TABLE_NAME + " (" 
+//								  + SID + " int not null, " 
+//								  + BODY + " text not null, " 
+//								  +  ANSWER +" text no null," 
+//								  +  IS_CORRECTED + " int no null"
+//								  + ");";
+//				db.execSQL(sql);
+//			}
+//			catch(Exception e)
+//			{
+//				Log.i("In onCreate .... ",e.toString());
+//			}
+//		}
+//
+//		@Override
+//		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+//		}
+//	};
 
 	
     @Override
@@ -112,8 +103,9 @@ public class CutAnimActivity extends   Activity
              * 注意！这里是一个语句，不是一个函数  */
     		public void onClick(View v)
     		{
-				/*  创建和使用Cutact */
-				Intent intent=new Intent(context, Cutact.class);
+				/*  创建和使用Cut act */
+				//Intent intent=new Intent(context, Cutact.class);
+    			Intent intent=new Intent(context, Cutact.class);
 				startActivity(intent);
     		}
     	};

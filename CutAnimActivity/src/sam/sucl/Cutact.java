@@ -142,6 +142,9 @@ public class Cutact extends Activity
 					{
 						mTuPosX = mScreenWidth;
 						subject1 =  new GlobalData(103, "Jordan is which team of nba?", "Bulls", 0);
+						
+						GlobalData tmpSubject = new GlobalData();
+						CDatabaseHelper.GetSubjects( tmpSubject);
 					}
 					else
 					{
